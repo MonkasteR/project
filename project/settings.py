@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+
 # import django
 # django.setup()
 
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'simpleapp.apps.SimpleappConfig',
     # 'simpleapp',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

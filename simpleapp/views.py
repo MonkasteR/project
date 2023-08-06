@@ -14,4 +14,7 @@ class ProductsList(ListView):
         context = super().get_context_data(**kwargs)
         context['time_now'] = datetime.utcnow()
         context['next_sale'] = "Распродажа в среду!"
-        return context
+class ProductDetail(ListView):
+    pass
+
+
