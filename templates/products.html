@@ -5,60 +5,69 @@
 {% load custom_tags %}
 
 {% block title %}
-Products
+    Products
 {% endblock title %}
 
 {% block content %}
-   <h1>Все товары</h1>
+    <h1>Все товары</h1>
 
-   <form action="" method="get">
-       {{ filterset.form.as_p }}
-       <input type="submit" value="Найти" />
-   </form>
+    <form action="" method="get">
+        {{ filterset.form.non_field_errors }}
 
-   <hr>
-   {% if products %}
-       <table>
-           <tr>
-               <td>Название</td>
-               <td>Описание</td>
-               <td>Категория</td>
-               <td>Цена</td>
-               <td>Количество</td>
-           </tr>
+        {{ filterset.form.name__icontains.errors }}
+        <label for="{{ filterset.form.name__icontains.id_for_label }}">Search</label>
+        <input
+                id="{{ filterset.form.name__icontains.id }}"
+                name="{{ filterset.form.name__icontains.name }}"
+                value="{{ filterset.form.name__icontains.value }}"
+                class="form-control"
+        >
+        <input type="submit" class="mt-3 btn-primary" value="Найти"/>
+    </form>
 
-           {% for product in products %}
-           <tr>
-               <td>{{ product.name }}</td>
-               <td>{{ product.description|truncatechars:15 }}</td>
-               <td>{{ product.category.name }}</td>
-               <td>{{ product.price|currency }}</td>
-               <td>{{ product.quantity }}</td>
-           </tr>
-           {% endfor %}
+    <hr>
+    {% if products %}
+        <table>
+            <tr>
+                <td>Название</td>
+                <td>Описание</td>
+                <td>Категория</td>
+                <td>Цена</td>
+                <td>Количество</td>
+            </tr>
 
-       </table>
-   {% else %}
-       <h2>Товаров нет!</h2>
-   {% endif %}
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description|truncatechars:15 }}</td>
+                    <td>{{ product.category.name }}</td>
+                    <td>{{ product.price|currency }}</td>
+                    <td>{{ product.quantity }}</td>
+                </tr>
+            {% endfor %}
 
-   {% if page_obj.has_previous %}
-       {# Для каждой ссылки пагинации указываем обработку через новый тег #}
-       <a href="?{% url_replace page=1 %}">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
+        </table>
+    {% else %}
+        <h2>Товаров нет!</h2>
+    {% endif %}
 
-   {{ page_obj.number }}
+    {% if page_obj.has_previous %}
+        {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+        <a href="?{% url_replace page=1 %}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
 
-   {% if page_obj.has_next %}
-       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
 
 {% endblock content %}
