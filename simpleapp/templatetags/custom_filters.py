@@ -5,7 +5,7 @@ register = template.Library()
 
 
 CURRENCIES_SYMBOLS = {
-   'rub': 'Р',
+   'rub': '₽',
    'usd': '$',
 }
 
