@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
 )
-
+from django.core.cache import cache
 from .filters import ProductFilter
 from .forms import ProductForm
 from .models import Product, Category, Subscription
@@ -66,6 +66,7 @@ class ProductDelete(PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = 'product_delete.html'
     success_url = reverse_lazy('product_list')
+
 
 @login_required
 @csrf_protect
