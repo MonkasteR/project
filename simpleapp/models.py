@@ -23,8 +23,22 @@ class Product(models.Model):
         validators=[MinValueValidator(0.0)],
     )
 
-    def __str__(self):
-        return f'{self.name.title()}: {self.description[:10]}'
+def __str__(self):
+    """
+    Returns a string representation of the object.
+
+    This method formats the object's name and description to create a string
+    that represents the object. The name is converted to title case using the
+    `title()` method, and the description is truncated to the first 10
+    characters using slicing.
+
+    Returns:
+        str: The string representation of the object, in the format
+        "<name_title>: <description_10>".
+    """
+    name_title = self.name.title()
+    description_10 = self.description[:10]
+    return f'{name_title}: {description_10}'
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[str(self.id)])
