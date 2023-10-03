@@ -1,8 +1,8 @@
-from django.core.cache import cache
-from django.db import models
-from django.core.validators import MinValueValidator
-from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.core.validators import MinValueValidator
+from django.db import models
+from django.urls import reverse
 
 
 class Product(models.Model):
@@ -23,22 +23,27 @@ class Product(models.Model):
         validators=[MinValueValidator(0.0)],
     )
 
-def __str__(self):
-    """
-    Returns a string representation of the object.
+    @property
+    def on_stock(self):
+        return self.quantity > 0
 
-    This method formats the object's name and description to create a string
-    that represents the object. The name is converted to title case using the
-    `title()` method, and the description is truncated to the first 10
-    characters using slicing.
+    def __str__(self):
+        """
+        Returns a string representation of the object.
 
-    Returns:
-        str: The string representation of the object, in the format
-        "<name_title>: <description_10>".
-    """
-    name_title = self.name.title()
-    description_10 = self.description[:10]
-    return f'{name_title}: {description_10}'
+        This method formats the object's name and description to create a string
+        that represents the object. The name is converted to title case using the
+        `title()` method, and the description is truncated to the first 10
+        characters using slicing.
+
+        Returns:
+            str: The string representation of the object, in the format
+            "<name_title>: <description_10>".
+        """
+
+        name_title = self.name.title()
+        description_10 = self.description[:10]
+        return f'{name_title}: {description_10}'
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[str(self.id)])
